@@ -1,6 +1,6 @@
 using UC15_backend.Interfaces;
 
-namespace UC15_backend.Classes
+namespace UC15_Backend.Classes
 {
     public class PessoaFisica : Pessoa, IPessoaFisica
     {

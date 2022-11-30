@@ -1,5 +1,4 @@
-﻿using UC15_backend.Classes;
-using UC15_Backend.Classes;
+﻿using UC15_Backend.Classes;
 
 List<PessoaFisica> listaPf = new List<PessoaFisica>();
 
@@ -132,6 +131,12 @@ opcao = Console.ReadLine();
 
                 listaPf.Add(novaPF);
 
+                StreamWriter cw = new StreamWriter($"{novaPF.nome}.txt");
+
+                cw.WriteLine(novaPF.nome);
+
+                cw.Close();
+
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("Cadastro concluido!");
@@ -154,6 +159,7 @@ opcao = Console.ReadLine();
 Nome: {cadaPessoa.nome}
 Endereço:{cadaPessoa.endereco.logradouro},{cadaPessoa.endereco.numero}
 Imposto a ser pago:{metodosPf.CalcularImposto(cadaPessoa.rendimento).ToString("c")}
+CPF: {cadaPessoa.cpf}
 ");
                     Console.WriteLine($"Aperte ENTER para continuar");
                     
@@ -167,6 +173,9 @@ Imposto a ser pago:{metodosPf.CalcularImposto(cadaPessoa.rendimento).ToString("c
                         Console.ResetColor();
                         Thread.Sleep(2000);
                     }
+
+                    
+
                         break;
 
                     case "0":
@@ -221,28 +230,47 @@ Imposto a ser pago:{metodosPf.CalcularImposto(cadaPessoa.rendimento).ToString("c
             Console.WriteLine("Pessoa Juridica");
 
             PessoaJuridica novaPj = new PessoaJuridica(); 
+            PessoaJuridica metodosPj = new PessoaJuridica(); 
             Endereco novaEndPj = new Endereco();
 
-            novaPj.nome = "Nome Pj";
-            novaPj.razaoSocial = "Razão social Pj";
-            novaPj.cnpj = "55.554.444/0001.21";
+            // novaPj.nome = "Isabele";
+            // novaPj.razaoSocial = "Razão social Pj";
+            // novaPj.cnpj = "55.554.444/0001.21";
 
-            novaEndPj.logradouro = "Rua fortaleza";
-            novaEndPj.numero = 177;
+            // novaEndPj.logradouro = "Rua fortaleza";
+            // novaEndPj.numero = 177;
 
-            novaPj.endereco = novaEndPj;
+            // novaPj.endereco = novaEndPj;
 
+            // Console.WriteLine(@$"
+            // Nome: {novaPj.nome}
+            // Razão Social: {novaPj.razaoSocial}
+            // CNPJ: {novaPj.cnpj} - Valido - {novaPj.ValidarCnpj(novaPj.cnpj)}");
+
+            // Console.WriteLine("Tecle ENTER para sair");
+            // Console.ReadLine();
+
+            // metodosPj.Inserir(novaPj);
+            List<PessoaJuridica> listaExibicaoPj = metodosPj.LerArquivo();
+
+            foreach ( PessoaJuridica cadaPessoa in listaExibicaoPj)
+            {
             Console.WriteLine(@$"
-            Nome: {novaPj.nome}
-            Razão Social: {novaPj.razaoSocial}
-            CNPJ: {novaPj.cnpj} - Valido - {novaPj.ValidarCnpj(novaPj.cnpj)}");
+Nome: {cadaPessoa.nome}
+Razão Social: {cadaPessoa.razaoSocial}
+CNPJ: {cadaPessoa.cnpj} - Valido - {cadaPessoa.ValidarCnpj(cadaPessoa.cnpj)}");
 
             Console.WriteLine("Tecle ENTER para sair");
             Console.ReadLine();
+            }
+
             break;
 
         case "0":
-        Console.WriteLine("Saiu");
+        Console.Clear();
+        Console.WriteLine("Obrigada por utilizar nosso sistema!^.^");
+        Thread.Sleep(2000);
+        Utils.BarraCarregamento("Finalizando...");
             break;
 
         default:

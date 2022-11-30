@@ -1,13 +1,17 @@
+using System.Collections.Generic;
+using Microsoft.VisualBasic.CompilerServices;
 using System.Text.RegularExpressions;
 using UC15_backend.Interfaces;
 
-namespace UC15_backend.Classes
+namespace UC15_Backend.Classes
 {
     public class PessoaJuridica : Pessoa, IPessoaJuridica
     {
         public string? cnpj { get; set; }
 
         public string? razaoSocial { get; set; }
+
+        public string caminho {get; private set;} = "Database/PessoaJuridica.csv";
 
         public override float CalcularImposto(float rendimento)
         {
@@ -56,5 +60,35 @@ namespace UC15_backend.Classes
                 return false;
                 
         }
+
+        public void Inserir(PessoaJuridica pj) {
+
+            Utils.VerificarPastaArquivo(caminho);
+            string[] pjValores = {$"{pj.nome},{pj.cnpj},{pj.razaoSocial}"};
+            File.AppendAllLines(caminho,pjValores);
+        }
+
+        public List<PessoaJuridica> LerArquivo(){
+
+            List<PessoaJuridica> listPj = new List<PessoaJuridica>();
+            string[] linhas = File.ReadAllLines(caminho); 
+            
+            foreach (var cadaLinha in linhas)
+            {
+                string[] atributos = cadaLinha.Split(",");
+
+            PessoaJuridica cadaPj = new PessoaJuridica();
+
+            cadaPj.nome = atributos[0];
+            cadaPj.cnpj = atributos[1];
+            cadaPj.razaoSocial = atributos[2];
+
+            listPj.Add(cadaPj);
+            }
+
+        return listPj;
+
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 using UC15_backend.Interfaces;
 using UC15_Backend.Classes;
 
-namespace UC15_backend.Classes
+namespace UC15_Backend.Classes
 {
     public abstract class Pessoa : IPessoa
     {
